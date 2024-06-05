@@ -1,0 +1,1 @@
+export const fileUrl = "http://localhost:3001/college/"
