@@ -1,10 +1,8 @@
 import { dirname } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tempPath = path.join(__dirname, '../../../assets/academics');
-console.log(__dirname);
 import { fileURLToPath } from 'url';
 import path from 'path';
-// console.log(tempPath);
 
 export const academicsImageMethod = async (req, res) => {
     try {

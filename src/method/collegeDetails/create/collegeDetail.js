@@ -1,10 +1,9 @@
 import uuid4 from 'uuid4';
-import collegeDetailModel from '../../model/collegeDetail/collegeDetail.js';
-import { emailRegex, phoneRegex } from '../../utility/utils.js';
+import collegeDetailModel from '../../../model/collegeDetail/collegeDetail.js';
+import { emailRegex, phoneRegex } from '../../../utility/utils.js';
 
 const collegeDetailCreateMethod = async (req, res) => {
     try {
-
         const collegeName = req.body.collegeName;
         const email = req.body.email;
         const password = req.body.password;

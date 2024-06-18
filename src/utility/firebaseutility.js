@@ -1,22 +1,18 @@
-// firebase.js
 import admin from 'firebase-admin';
-import { getStorage } from 'firebase-admin/storage';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import dotenv from 'dotenv';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAo8FAGRjqj_XFO3rbifluDFBH_Xet6UoE",
-  authDomain: "college-c07af.firebaseapp.com",
-  projectId: "college-c07af",
-  storageBucket: "college-c07af.appspot.com",
-  messagingSenderId: "658494760247",
-  appId: "1:658494760247:web:f0586adcc7b392d887a6b2",
-  measurementId: "G-X5XL4C2ZRE"
-};
+dotenv.config();
+
+const serviceAccountPath = resolve(process.env.SERVICE_ACCOUNT_KEY_PATH);
+const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf-8'));
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: firebaseConfig.storageBucket
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET
 });
 
-const bucket = getStorage().bucket();
+const bucket = admin.storage().bucket();
 
 export default bucket;

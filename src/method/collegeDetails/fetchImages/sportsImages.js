@@ -3,7 +3,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const tempPath = path.join(__dirname, '../../../assets/sports');
 import { fileURLToPath } from 'url';
 import path from 'path';
-// console.log(tempPath);
 
 export const sportImageMethod = async (req, res) => {
     try {

@@ -1,5 +1,7 @@
 import multer from 'multer';
 import { fileURLToPath } from "url";
+import uuid4 from 'uuid4';
+import { uuid } from 'uuidv4';
 
 // Function to configure multer storage with dynamic destination
 const configureStorage = (assetsDirectory) => {
@@ -11,7 +13,7 @@ const configureStorage = (assetsDirectory) => {
         },
         filename: (req, file, cb) => {
             // Define filename logic (e.g., keep original filename)
-            cb(null, `${Date.now()}-${file.originalname}`);
+            cb(null, file.originalname);
         }
     });
 };

@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4';
-import infrastructureDetailModel from "../../model/collegeDetail/infrastructure.js";
-import collegeModel from "../../model/collegeDetail/collegeDetail.js";
+import infrastructureDetailModel from "../../../model/collegeDetail/infrastructure.js";
+import collegeModel from "../../../model/collegeDetail/collegeDetail.js";
 
 const infrastructureCreateMethod = async (req, res) => {
     try {
@@ -27,6 +27,12 @@ const infrastructureCreateMethod = async (req, res) => {
         if (collegeExists == 0) {
             return res.status(400).json({ error: 'College ID does not exist' });
         }
+
+        const infrastructureExists = await infrastructureDetailModel.find({ collegeId: collegeId });
+        if (infrastructureExists) {
+            return res.status(400).json({ error: 'infrastructure is already add for this college' });
+        }
+
         const infrastructureDetail = new infrastructureDetailModel({
             infrastructureId: uuid4(),
             collegeId, smartClass, staffRoom, auditorium, computerLab, hostel,

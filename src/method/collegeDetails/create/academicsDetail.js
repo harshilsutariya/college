@@ -1,8 +1,8 @@
 import uuid4 from 'uuid4';
-import collegeModel from "../../model/collegeDetail/collegeDetail.js";
-import academicsDetailMethod from '../../model/collegeDetail/academics.js';
-import { fileUrl } from '../../utility/fileServerConfig.js';
-import bucket from '../../utility/firebaseutility.js'; // Import the bucket instance
+import collegeModel from "../../../model/collegeDetail/collegeDetail.js";
+import academicsDetailMethod from '../../../model/collegeDetail/academics.js';
+import { fileUrl } from '../../../utility/fileServerConfig.js';
+import bucket from '../../../utility/firebaseutility.js'; 
 
 const academicsCreateMethod = async (req, res) => {
     try {
@@ -36,21 +36,22 @@ const academicsCreateMethod = async (req, res) => {
         for (let i in fileArray) {
             const file = fileArray[i];
             const uniqueName = `${uuid4()}_${file.originalname}`;
-            const fileUpload = bucket.file(uniqueName);
+            // const folderPath = `academics/${uniqueName}`;
+            // const fileUpload = bucket.file(folderPath);
 
-            await fileUpload.save(file.buffer, {
-                contentType: file.mimetype,
-                public: true,
-            });
+            // await fileUpload.save(file.buffer, {
+            //     contentType: file.mimetype,
+            //     public: true,
+            // });
 
-            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${uniqueName}`;
+            // const publicUrl = `https://storage.googleapis.com/${bucket.name}/${uniqueName}`;
 
             let oneObj = {
                 collegeId,
-                localServerUrl: `${fileUrl}image/${file.originalname}`,
+                localServerUrl: `${fileUrl}/academic/image/${req.files[i].originalname}`,
                 moreInfo: moreInfoArray[i],
-                imageName: file.originalname,
-                firebaseUrl: publicUrl
+                imageName: req.files[i].originalname,
+                // firebaseUrl: publicUrl
             };
 
             ObjToDocArray.push(oneObj);

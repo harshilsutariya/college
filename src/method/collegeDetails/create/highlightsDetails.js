@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4';
-import highlightsDetailModel from '../../model/collegeDetail/highlights.js'
-import collegeModel from "../../model/collegeDetail/collegeDetail.js";
+import highlightsDetailModel from '../../../model/collegeDetail/highlights.js'
+import collegeModel from "../../../model/collegeDetail/collegeDetail.js";
 
 const highlightDetailCreateMethod = async (req, res) => {
     try {
