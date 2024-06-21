@@ -85,6 +85,11 @@ const infrastructureSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+    
+    isDeleted : {
+        type : String,
+        default : false
     }
 });
 

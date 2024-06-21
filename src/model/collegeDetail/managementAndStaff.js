@@ -21,7 +21,8 @@ const managementAndStaffSchema = new mongoose.Schema({
     },
     
     Name: {
-        type: String
+        type: String,
+        required: true
     },
 
     qualification: {
@@ -46,11 +47,13 @@ const managementAndStaffSchema = new mongoose.Schema({
     }],
 
     designation: {
-        type: String
+        type: String,
+        required: true
     },
 
-    c: {
-        type: String
+    about: {
+        type: String,
+        required: true
     },
 
     createdAt: {
@@ -60,6 +63,11 @@ const managementAndStaffSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+
+    isDeleted : {
+        type : String,
+        default : false
     }
 
 });

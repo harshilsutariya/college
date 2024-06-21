@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const collegeSchema = new mongoose.Schema({
 
     collegeId: {
-        type: String
+        type: String,
     },
 
     collegeName: {
@@ -154,6 +154,11 @@ const collegeSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+    
+    isDeleted : {
+        type : String,
+        default : false
     }
 
 });

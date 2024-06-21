@@ -58,7 +58,7 @@ const collgeImagesCreateMethod = async (req, res) => {
             ObjToDocArray.push(oneObj);  
         }
 
-        ObjToDocArray = ObjToDocArray.map((val) => ({ ...val, culturalId: uuid4() }));
+        ObjToDocArray = ObjToDocArray.map((val) => ({ ...val, collegeImagesId: uuid4() }));
 
         const collgeImagesData = await collgeImagesDetailMethod.insertMany(ObjToDocArray);
 

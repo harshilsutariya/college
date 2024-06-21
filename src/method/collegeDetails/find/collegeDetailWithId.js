@@ -32,7 +32,7 @@ export const getSpecificCollegeDetailMethod = async (req, res) => {
             youTubeLinkDetailModel.find({ collegeId })
         ]);
 
-        res.json({
+        res.status(200).json({
             collegeDetails: results[0],
             infrastructure: results[1],
             academics: results[2],

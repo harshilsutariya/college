@@ -37,6 +37,11 @@ const culturalSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+
+    isDeleted : {
+        type : String,
+        default : false
     }
 
 });

@@ -30,10 +30,8 @@ export const getAllCollegeDetails = async (req, res) => {
             youTubeLinkDetailModel.find()
         ]);
 
-        // Initialize an object to group data by collegeId
         const groupedData = {};
 
-        // Function to group data
         const groupByCollegeId = (data, key) => {
             data.forEach(item => {
                 const collegeId = item.collegeId;
@@ -58,7 +56,6 @@ export const getAllCollegeDetails = async (req, res) => {
             });
         };
 
-        // Group data by collegeId
         groupByCollegeId(results[0], 'collegeDetails');
         groupByCollegeId(results[1], 'infrastructure');
         groupByCollegeId(results[2], 'academics');

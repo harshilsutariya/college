@@ -11,12 +11,11 @@ const eligibilityAndTermsSchema = new mongoose.Schema({
 
     eligibilityCrieria: {
         type: String,
-        default: false
     },
 
     feeTerms: {
         type: String,
-        default: false
+        require: true,
     },
     
     createdAt: {
@@ -26,6 +25,11 @@ const eligibilityAndTermsSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+    
+    isDeleted : {
+        type : String,
+        default : false
     }
 });
 

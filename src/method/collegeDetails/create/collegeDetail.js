@@ -1,6 +1,8 @@
 import uuid4 from 'uuid4';
+import bcrypt from 'bcrypt';
 import collegeDetailModel from '../../../model/collegeDetail/collegeDetail.js';
 import { emailRegex, phoneRegex } from '../../../utility/utils.js';
+import adminModel from '../../../model/admins/collegeAdmins.js';
 
 const collegeDetailCreateMethod = async (req, res) => {
     try {
@@ -45,32 +47,57 @@ const collegeDetailCreateMethod = async (req, res) => {
         const existingCollegeWithEmail = await collegeDetailModel.findOne({ email });
         const existingCollegeWithPhone = await collegeDetailModel.findOne({ phone });
 
-        if (existingCollegeWithEmail) {
-            return res.status(400).json({ error: 'Email already exists' });
+
+        if (existingCollegeWithEmail || existingCollegeWithPhone) {
+            return res.status(400).json({
+                error: 'Email or phone number already exists'
+            });
+        } 
+        else {
+            const collegeId = uuid4();
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const newCollege = new collegeDetailModel({
+                collegeId,
+                collegeName, email, password: hashedPassword, phone, address, city, area,
+                location, collegeType, systemType, academicType, affiliated,
+                classRooms, totalSeats, classType, collegeCode, collegeArea,
+                noOfFloors, timings, historyAndAchievement, discriptionBox, moreInfo
+            });
+
+           
+            // console.log("Saved college data:", collegeData);
+
+            const newAdmin = new adminModel({
+                collegeId,
+                Name: collegeName,
+                email: email,
+                password: hashedPassword,
+                // role: "collegeAdmin"
+            });
+
+            if(!newCollege || !newAdmin){
+                return res.status(400).json({
+                    error: 'something went wrong'
+                });
+            }
+
+            const collegeAdmin = await newAdmin.save();
+            const collegeData = await newCollege.save();
+
+            res.status(201).json({
+                message: "College Detail Add Successfully",
+                collegeData, collegeAdmin
+            });
         }
 
-        if (existingCollegeWithPhone) {
-            return res.status(400).json({ error: 'Phone number already exists' });
-        }
 
-        const newCollege = new collegeDetailModel({
-            collegeId: uuid4(),
-            collegeName, email, password, phone, address, city, area,
-            location, collegeType, systemType, academicType, affiliated,
-            classRooms, totalSeats, classType, collegeCode, collegeArea,
-            noOfFloors, timings, historyAndAchievement, discriptionBox, moreInfo
-        });
-
-        const collegeData = await newCollege.save();
-        res.status(201).json({
-            message: "College Detail Add Successfully",
-            collegeData
-        });
 
     }
     catch (error) {
-        res.status(500).json({ message: "error" });
+        res.status(500).json({ message: "error", error });
+        console.log(error);
     }
 }
 
-export default collegeDetailCreateMethod
+export default collegeDetailCreateMethod;

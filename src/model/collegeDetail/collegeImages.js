@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const collegeImagesSchema = new mongoose.Schema({
 
-    collgeImagesId: {
+    collegeImagesId: {
         type: String
     },
 
@@ -37,6 +37,11 @@ const collegeImagesSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+    
+    isDeleted : {
+        type : String,
+        default : false
     }
 
 });

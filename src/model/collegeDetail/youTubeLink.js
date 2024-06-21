@@ -37,8 +37,12 @@ const youTubeLinkSchema = new mongoose.Schema({
 
     updatedAt: {
         type: Number
+    },
+    
+    isDeleted : {
+        type : String,
+        default : false
     }
-
 });
 
 const youTubeLinkDetailModel = mongoose.model("youTube", youTubeLinkSchema);

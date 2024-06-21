@@ -20,6 +20,21 @@ const alumniAndtoppersSchema = new mongoose.Schema({
         required: true
     },
 
+    moreInfo:{
+        type: String,
+        required: true
+    },
+
+    passingOutYear:{
+        type: String,
+        required: true
+    },
+
+    marks:{
+        type: String,
+        required: true
+    },
+
     localServerUrl: {
         type: String,
         required: true
@@ -33,6 +48,11 @@ const alumniAndtoppersSchema = new mongoose.Schema({
     createdAt: {
         type: Number,
         default: Date.now(),
+    },
+
+    isDeleted : {
+        type : String,
+        default : false
     },
 
     updatedAt: {
