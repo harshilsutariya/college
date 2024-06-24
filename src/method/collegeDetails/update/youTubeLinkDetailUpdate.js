@@ -3,6 +3,7 @@ import collegeModel from "../../../model/collegeDetail/collegeDetail.js";
 import youTubeLinkDetailModel from '../../../model/collegeDetail/youTubeLink.js';
 
 const youTubeLinkDetailUpdateMethod = async (req, res) => {
+    
     try {
         const collegeId = req.body.collegeId;
         const youTubeLinkId = req.body.youTubeLinkId;
@@ -12,13 +13,12 @@ const youTubeLinkDetailUpdateMethod = async (req, res) => {
         const youTubeLink4 = req.body.youTubeLink4;
         const youTubeLink5 = req.body.youTubeLink5;
 
-        const collegeExists = await collegeModel.findOne({ collegeId });
+        const collegeExists = await collegeModel.findOne({ collegeId: collegeId ,isDeleted: { $ne: true } });
         if (!collegeExists) {
             return res.status(404).json({ error: 'College not found' });
         }
 
-        const existingYouTubeLinkDetail = await youTubeLinkDetailModel.findOne({ youTubeLinkId });
-        
+        const existingYouTubeLinkDetail = await youTubeLinkDetailModel.findOne({ youTubeLinkId ,isDeleted: { $ne: true }});
         if (!existingYouTubeLinkDetail) {
             return res.status(404).json({ error: 'YouTube link details not found for update' });
         }
@@ -32,7 +32,7 @@ const youTubeLinkDetailUpdateMethod = async (req, res) => {
         };
 
         const youTubeLinkUpdateResult = await youTubeLinkDetailModel.updateOne(
-            { youTubeLinkId, collegeId },
+            { youTubeLinkId  },
             { $set: updateData }
         );
 

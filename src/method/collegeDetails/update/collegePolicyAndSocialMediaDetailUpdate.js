@@ -12,12 +12,12 @@ const collegePolicyAndSocialMediaDetailUpdateMethod = async (req, res) => {
         const youtube = req.body.youtube;
         const instagram = req.body.instagram;
 
-        const existingCollege = await collegeModel.findOne({ collegeId });
+        const existingCollege = await collegeModel.findOne({ collegeId, isDeleted: { $ne: true } });
         if (!existingCollege) {
             return res.status(404).json({ error: 'College not found' });
         }
 
-        const existingDetails = await collegePolicyAndSocialMediaDetailModel.findOne({ collegePolicyAndSocialMedialId });
+        const existingDetails = await collegePolicyAndSocialMediaDetailModel.findOne({ collegePolicyAndSocialMedialId  ,isDeleted: { $ne: true }});
 
         if (!existingDetails) {
             return res.status(404).json({ error: 'No existing policy and social media details found for update' });

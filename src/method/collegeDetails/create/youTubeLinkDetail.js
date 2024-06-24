@@ -18,7 +18,7 @@ const youTubeLinkDetailCreateMethod = async (req, res) => {
         }
 
         const youTubeLinkExists = await youTubeLinkDetailModel.find({ collegeId: collegeId });
-        if (youTubeLinkExists) {
+        if (youTubeLinkExists==1) {
             return res.status(400).json({ error: 'youTubeLink is already add for this college' });
         }
 

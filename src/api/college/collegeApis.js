@@ -46,6 +46,7 @@ import { alumniAndToppersUploadDir } from "../../middleware/uploadDir.js";
 import { collegeImagesUploadDir } from "../../middleware/uploadDir.js";
 import {managementAndStaffUploadDir} from "../../middleware/uploadDir.js"
 import createCollegeTeamMethod from "../../method/collegeDetails/create/collegeTeam.js";
+import deleteCollegeDetailMethod from "../../method/collegeDetails/delete/collegeDetailDelete.js";
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });
@@ -99,6 +100,8 @@ collegeApisRouter.post('/youTubeLink/create', verifyToken, youTubeLinkCreateMeth
 collegeApisRouter.post('/collegePolicyAndSocialMedia/create', verifyToken, collegePolicyAndSocialMediaCreateMethod);
 
 collegeApisRouter.post('/subjects/create', verifyToken, subjectsCreateMethod);
+
+collegeApisRouter.patch('/delete/:collegeId', verifyToken, deleteCollegeDetailMethod);
 
 
 

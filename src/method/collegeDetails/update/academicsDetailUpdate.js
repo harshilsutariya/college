@@ -10,8 +10,6 @@ const academicsUpdateMethod = async (req, res) => {
         let moreInfoArray = req.body.moreInfo;
         let photoIndexArray = req.body.photoIndex;
 
-        console.log(collegeIdArray);
-
         // Check if colleges exist
         const colleges = await collegeModel.find({ collegeId: { $in: collegeIdArray }, isDeleted: { $ne: true } });
 

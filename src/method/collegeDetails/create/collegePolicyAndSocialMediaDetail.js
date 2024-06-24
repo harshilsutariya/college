@@ -18,7 +18,7 @@
             }
 
             const collegePolicyAndSocialMediaExists = await collegePolicyAndSocialMediaDetailModel.find({ collegeId: collegeId });
-            if (collegePolicyAndSocialMediaExists) {
+            if (collegePolicyAndSocialMediaExists==1) {
                 return res.status(400).json({ error: 'collegePolicyAndSocialMedia is already add for this college' });
             }
 

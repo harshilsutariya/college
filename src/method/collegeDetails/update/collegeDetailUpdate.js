@@ -29,7 +29,7 @@ const collegeDetailUpdateMethod = async (req,res) => {
         const moreInfo = req.body.moreInfo;
 
         
-        const existingCollege = await collegeDetailModel.findOne({ collegeId });
+        const existingCollege = await collegeDetailModel.findOne({ collegeId, isDeleted: { $ne: true } });
         
         if (!existingCollege) {
             return res.status(404).json({ error: 'College not found' });

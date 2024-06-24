@@ -9,12 +9,12 @@ const eligibilityUpdateMethod = async (req, res) => {
         const eligibilityCriteria = req.body.eligibilityCriteria;
         const feeTerms = req.body.feeTerms;
 
-        const collegeExists = await collegeModel.findOne({ collegeId });
+        const collegeExists = await collegeModel.findOne({ collegeId, isDeleted: { $ne: true } });
         if (!collegeExists) {
             return res.status(404).json({ error: 'College ID does not exist' });
         }
 
-        const existingEligibilityAndTerms = await eligibilityAndTermsDetailModel.findOne({ eligibilityAndTermsId });
+        const existingEligibilityAndTerms = await eligibilityAndTermsDetailModel.findOne({ eligibilityAndTermsId  ,isDeleted: { $ne: true }});
         if (!existingEligibilityAndTerms) {
             return res.status(404).json({ error: 'Eligibility and Terms details not found for update' });
         }
@@ -28,10 +28,6 @@ const eligibilityUpdateMethod = async (req, res) => {
             { eligibilityAndTermsId },
             { $set: updateData }
         );
-
-        if (eligibilityAndTermsUpdateResult.modifiedCount === 0) {
-            return res.status(404).json({ error: 'No updates performed. The provided data may be the same as existing data.' });
-        }
 
         res.status(200).json({
             message: "Eligibility and Terms details updated successfully",

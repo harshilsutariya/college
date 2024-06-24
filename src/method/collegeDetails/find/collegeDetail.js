@@ -14,7 +14,12 @@ import youTubeLinkDetailModel from "../../../model/collegeDetail/youTubeLink.js"
 
 export const getAllCollegeDetails = async (req, res) => {
     try {
-        const results = await Promise.all([
+
+        const activeColleges = await collegeDetailModel.find({ isDeleted: { $ne: true } });
+
+        if (activeColleges.length === 0) {
+            return res.status(404).send({ message: "No active colleges found." });
+        }else{ const results = await Promise.all([
             collegeDetailModel.find(),
             infrastructureDetailModel.find(),
             academics.find(),
@@ -70,7 +75,9 @@ export const getAllCollegeDetails = async (req, res) => {
         groupByCollegeId(results[11], 'subjects');
         groupByCollegeId(results[12], 'youtubeLinks');
 
-        res.json(groupedData);
+        res.json(groupedData);}
+
+       
     } catch (error) {
         console.error("Error fetching college details: ", error);
         res.status(500).json({ message: "Failed to retrieve college details" });

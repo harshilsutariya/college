@@ -24,12 +24,12 @@ const infrastructureUpdateMethod = async (req, res) => {
         const playGround = req.body.playGround;
         const moreInfo = req.body.moreInfo;        
 
-        const collegeExists = await collegeModel.findOne({ collegeId });
+        const collegeExists = await collegeModel.findOne({ collegeId, isDeleted: { $ne: true } });
         if (!collegeExists) {
             return res.status(404).json({ error: 'College ID does not exist' });
         }
 
-        const existingInfrastructure = await infrastructureDetailModel.findOne({ infrastructureId });
+        const existingInfrastructure = await infrastructureDetailModel.findOne({ infrastructureId  ,isDeleted: { $ne: true }});
         if (!existingInfrastructure) {
             return res.status(404).json({ error: 'Infrastructure details not found for update' });
         }

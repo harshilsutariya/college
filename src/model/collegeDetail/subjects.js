@@ -45,7 +45,7 @@ const subjectSchema = new mongoose.Schema({
     },
 
     isDeleted : {
-        type : String,
+        type : Boolean,
         default : false
     }
 

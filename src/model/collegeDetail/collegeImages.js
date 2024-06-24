@@ -40,7 +40,7 @@ const collegeImagesSchema = new mongoose.Schema({
     },
     
     isDeleted : {
-        type : String,
+        type : Boolean,
         default : false
     }
 

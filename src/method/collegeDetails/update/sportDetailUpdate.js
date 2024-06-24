@@ -9,12 +9,16 @@ const sportUpdateMethod = async (req, res) => {
         let collegeIdArray = req.body.collegeId;
         let moreInfoArray = req.body.moreInfo;
         let photoIndexArray = req.body.photoIndex;
-
-        console.log(collegeIdArray);
+        console.log("Searching for colleges with IDs:", collegeIdArray);
 
         // Check if colleges exist
         const colleges = await collegeModel.find({ collegeId: { $in: collegeIdArray }, isDeleted: { $ne: true } });
+        console.log("Colleges found:", colleges);
+        if (colleges.length === 0) {
+            return res.status(404).json({ error: 'One or more colleges are not available, enter correct college ids.' });
+        }        
 
+        console.log(colleges);
         // Validate the received data
         if (colleges.length === 0) {
             res.status(404).send({

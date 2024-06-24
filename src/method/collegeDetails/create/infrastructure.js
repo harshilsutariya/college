@@ -29,7 +29,7 @@ const infrastructureCreateMethod = async (req, res) => {
         }
 
         const infrastructureExists = await infrastructureDetailModel.find({ collegeId: collegeId });
-        if (infrastructureExists) {
+        if (infrastructureExists==1) {
             return res.status(400).json({ error: 'infrastructure is already add for this college' });
         }
 

@@ -4,7 +4,6 @@ import subjectdetailsModel from '../../../model/collegeDetail/subjects.js';
 
 const subjectsDetailUpdateMethod = async (req, res) => {
     try {
-        console.log(req.body);
         const collegeId = req.body.collegeId;
         const subjectId = req.body.subjectId;
         const subjectName = req.body.subjectName;
@@ -13,12 +12,12 @@ const subjectsDetailUpdateMethod = async (req, res) => {
         const maximumFees = req.body.maximumFees;
         const noOfSeats = req.body.noOfSeats;
 
-        const collegeExists = await collegeModel.findOne({ collegeId: collegeId });
+        const collegeExists = await collegeModel.findOne({ collegeId, isDeleted: { $ne: true } });
         if (!collegeExists) {
             return res.status(404).json({ error: 'College ID does not exist' });
         }
 
-        const existingSubject = await subjectdetailsModel.findOne({ subjectId });
+        const existingSubject = await subjectdetailsModel.findOne({ subjectId ,isDeleted: { $ne: true }});
         if (!existingSubject) {
             return res.status(404).json({ error: 'Subject ID not found for update' });
         }
@@ -42,7 +41,6 @@ const subjectsDetailUpdateMethod = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Update Error:", error);
         res.status(500).json({ message: "Error updating subject details", error: error.message });
     }
 }

@@ -64,7 +64,7 @@ const culturalCreateMethod = async (req, res) => {
         res.status(201).send({ message: "success", newdata: culturalData });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: "Internal Server Error" });
+        res.status(500).send({ error: "Internal Server Error",error });
     }
 };
 

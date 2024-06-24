@@ -16,7 +16,7 @@ const highlightDetailCreateMethod = async (req, res) => {
         }
 
         const highlightExists = await highlightsDetailModel.find({ collegeId: collegeId });
-        if (highlightExists) {
+        if (highlightExists==1) {
             return res.status(400).json({ error: 'highlight is already add for this college' });
         }
 

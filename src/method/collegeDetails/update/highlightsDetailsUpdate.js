@@ -11,12 +11,12 @@ const highlightDetailUpdateMethod = async (req, res) => {
         const scholarship = req.body.scholarship;
         const safetySecurity = req.body.safetySecurity;
 
-        const collegeExists = await collegeModel.findOne({ collegeId });
+        const collegeExists = await collegeModel.findOne({ collegeId, isDeleted: { $ne: true } });
         if (!collegeExists) {
             return res.status(404).json({ error: 'College ID does not exist' });
         }
 
-        const existingHighlight = await highlightsDetailModel.findOne({ highlightsId });
+        const existingHighlight = await highlightsDetailModel.findOne({ highlightsId  ,isDeleted: { $ne: true }});
         if (!existingHighlight) {
             return res.status(404).json({ error: 'Highlight details not found for update' });
         }
@@ -32,10 +32,6 @@ const highlightDetailUpdateMethod = async (req, res) => {
             { highlightsId },
             { $set: updateData }
         );
-
-        if (highlightsUpdateResult.modifiedCount === 0) {
-            return res.status(404).json({ error: 'No updates performed. The provided data may be the same as existing data.' });
-        }
 
         res.status(200).json({
             message: "Highlight details updated successfully",
