@@ -4,6 +4,14 @@ import { emailRegex, phoneRegex } from '../../../utility/utils.js';
 
 const collegeDetailUpdateMethod = async (req,res) => {
     try {
+        
+        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+            return res.status(403).send({
+                status: "failed",
+                error: "You don't have access"
+            });
+        }
+        
         const collegeId  = req.body.collegeId;
         const collegeName = req.body.collegeName;
         const email = req.body.email;

@@ -7,6 +7,14 @@ import bucket from '../../../utility/firebaseutility.js';
 const collgeImagesCreateMethod = async (req, res) => {
     console.log(req.body);
     try {
+        
+        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+            return res.status(403).send({
+                status: "failed",
+                error: "You don't have access"
+            });
+        }
+
         const collegeId = req.body.collegeId;
         let Name = req.body.Name;
 

@@ -2,6 +2,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import collegeDetailRoutes from './router/collegeRouter.js';
 import authRouter from './router/authRouter.js';
+import studentRouter from './router/studentRouter.js';
 
 const port = 3001;
 
@@ -16,6 +17,8 @@ app.use(express.static('public'));
 app.use(collegeDetailRoutes);
 
 app.use(authRouter);
+
+app.use(studentRouter)
 
 app.listen(port, () => {
     console.log(`Server running at ${port}`);

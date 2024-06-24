@@ -5,6 +5,14 @@ import { fileUrl } from '../../../utility/fileServerConfig.js';
 
 const academicsUpdateMethod = async (req, res) => {
     try {
+                
+        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+            return res.status(403).send({
+                status: "failed",
+                error: "You don't have access"
+            });
+        }
+        
         let academicsIdArray = req.body.academicsId;
         let collegeIdArray = req.body.collegeId;
         let moreInfoArray = req.body.moreInfo;

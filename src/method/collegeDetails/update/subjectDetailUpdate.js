@@ -4,6 +4,14 @@ import subjectdetailsModel from '../../../model/collegeDetail/subjects.js';
 
 const subjectsDetailUpdateMethod = async (req, res) => {
     try {
+        
+        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+            return res.status(403).send({
+                status: "failed",
+                error: "You don't have access"
+            });
+        }
+        
         const collegeId = req.body.collegeId;
         const subjectId = req.body.subjectId;
         const subjectName = req.body.subjectName;

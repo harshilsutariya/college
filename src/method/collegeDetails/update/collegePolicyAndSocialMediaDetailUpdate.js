@@ -4,6 +4,14 @@ import collegePolicyAndSocialMediaDetailModel from '../../../model/collegeDetail
 
 const collegePolicyAndSocialMediaDetailUpdateMethod = async (req, res) => {
     try {
+        
+        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+            return res.status(403).send({
+                status: "failed",
+                error: "You don't have access"
+            });
+        }
+        
         const collegeId = req.body.collegeId;
         const collegePolicyAndSocialMedialId = req.body.collegePolicyAndSocialMedialId
         const termsAndconditions = req.body.termsAndconditions;

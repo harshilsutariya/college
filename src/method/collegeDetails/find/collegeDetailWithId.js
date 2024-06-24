@@ -16,6 +16,14 @@ export const getSpecificCollegeDetailMethod = async (req, res) => {
     const { collegeId } = req.params;
 
     try {
+        
+        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator' || req.roole ==='collegeViewer')) {
+            return res.status(403).send({
+                status: "failed",
+                error: "You don't have access"
+            });
+        }
+        
         const activeColleges = await collegeDetailModel.find({ isDeleted: { $ne: true } });
 
         if (activeColleges.length === 0) {

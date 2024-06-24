@@ -38,6 +38,13 @@ import collegeImagesMethod from "../../method/collegeDetails/fetchImages/college
 import managementAndStaffImageMethod from "../../method/collegeDetails/fetchImages/managementAndStaffImage.js";
 import eligibilityUpdateMethod from "../../method/collegeDetails/update/eligibilityAndTermsDetailUpdate.js";
 import alumniAndToppersCreateMethod from "../../method/collegeDetails/update/alumniAndToppersDetailUpdate.js";
+import createCollegeTeamMethod from "../../method/collegeDetails/create/collegeTeam.js";
+import deleteCollegeDetailMethod from "../../method/collegeDetails/delete/collegeDetailDelete.js";
+import deletesportImageMethod from "../../method/collegeDetails/delete/imageDelete.js/sportdelete.js";
+import deleteacademicsImageMethod from "../../method/collegeDetails/delete/imageDelete.js/academicsDelete.js";
+import deleteculturalImageMethod from "../../method/collegeDetails/delete/imageDelete.js/culturalDelete.js";
+import deletecollegeImagesMethod from "../../method/collegeDetails/delete/imageDelete.js/collegeImagesDelete.js";
+import deletemanagementAndStaffImageMethod from "../../method/collegeDetails/delete/imageDelete.js/managementAndStaffDelete.js";
 
 import { sportUploadDir } from "../../middleware/uploadDir.js";
 import { culturalUploadDir} from "../../middleware/uploadDir.js";
@@ -45,8 +52,6 @@ import { academicsUploadDir } from "../../middleware/uploadDir.js";
 import { alumniAndToppersUploadDir } from "../../middleware/uploadDir.js";
 import { collegeImagesUploadDir } from "../../middleware/uploadDir.js";
 import {managementAndStaffUploadDir} from "../../middleware/uploadDir.js"
-import createCollegeTeamMethod from "../../method/collegeDetails/create/collegeTeam.js";
-import deleteCollegeDetailMethod from "../../method/collegeDetails/delete/collegeDetailDelete.js";
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });
@@ -101,7 +106,19 @@ collegeApisRouter.post('/collegePolicyAndSocialMedia/create', verifyToken, colle
 
 collegeApisRouter.post('/subjects/create', verifyToken, subjectsCreateMethod);
 
-collegeApisRouter.patch('/delete/:collegeId', verifyToken, deleteCollegeDetailMethod);
+
+//delete data from the college
+collegeApisRouter.patch('/delete/collegedetails/:collegeId', verifyToken, deleteCollegeDetailMethod);
+
+collegeApisRouter.patch('/delete/sports/:sportsId', verifyToken, deletesportImageMethod);
+
+collegeApisRouter.patch('/delete/academic/:academicsId', verifyToken, deleteacademicsImageMethod);
+
+collegeApisRouter.patch('/delete/cultural/:culturalId', verifyToken, deleteculturalImageMethod);
+
+collegeApisRouter.patch('/delete/collegeImages/:collegeImagesId', verifyToken, deletecollegeImagesMethod);
+
+collegeApisRouter.patch('/delete/managementAndStaff/:managementAndStaffId', verifyToken, deletemanagementAndStaffImageMethod);
 
 
 
@@ -138,5 +155,6 @@ collegeApisRouter.patch('/alumniAndToppers/update', verifyToken, alumniAndTopper
 collegeApisRouter.patch('/collegeImages/update', verifyToken, collegeImagesupload.array("image"), collegeImagesUpdateMethod);
 
 collegeApisRouter.patch('/cultural/update', verifyToken, culturalupload.array("image"), culturalUpdateMethod);
+
 
 export default collegeApisRouter;

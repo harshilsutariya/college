@@ -1,9 +1,8 @@
 import express from "express"
-import collegeSignInRouter from "../api/auth/signIn/collegeSignIn.js"
-
+import signInRouter from "../api/auth/signIn/signIn.js"
 
 const authRouter = express.Router()
 
-authRouter.use("/auth" , collegeSignInRouter)
+authRouter.use("/auth" , signInRouter)
 
 export default authRouter

@@ -30,7 +30,7 @@ const collegeTeamSchema = new mongoose.Schema({
     role:{
         type: String,
         enum: {
-            values: ['collegeAdmin', 'collegeViewer', 'collegeModerator'],
+            values: ['superadmin','collegeAdmin', 'collegeViewer', 'collegeModerator'],
             message: '{VALUE} is not supported',
         },
         default:'collegeAdmin',
