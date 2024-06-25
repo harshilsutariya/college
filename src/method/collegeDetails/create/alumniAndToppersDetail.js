@@ -70,7 +70,7 @@ const alumniAndToppersCreateMethod = async (req, res) => {
 
             let oneObj = {
                 collegeId,
-                localServerUrl: `${fileUrl}/alumniAndToppers/image/${req.files[i].originalname}`,
+                localServerUrl: `${fileUrl}/college/alumniAndToppers/image/${req.files[i].originalname}`,
                 moreInfo: moreInfoArray[i],
                 Name: Name[i],
                 passingOutYear: passingOutYear[i],

@@ -25,3 +25,24 @@ export const uploadMW = (assetsDirectory) => {
         storage: storage
     });
 };
+
+export const uploadFields = [
+    { name: 'photoUrl', maxCount: 1 },
+    { name: 'hallTicketUrl', maxCount: 1 },
+    { name: 'aadharCardUrl', maxCount: 1 },
+    { name: 'casteCertificateUrl', maxCount: 1 }
+];
+
+// Middleware for validating required files
+export const validateRequiredFiles = (req, res, next) => {
+    const requiredFields = ['photoUrl', 'hallTicketUrl', 'aadharCardUrl', 'casteCertificateUrl'];
+    for (const field of requiredFields) {
+        if (!req.files[field] || req.files[field].length === 0) {
+            return res.status(400).send({
+                status: "failed",
+                error: `The field ${field} is required and missing.`,
+            });
+        }
+    }
+    next();
+};

@@ -1,5 +1,4 @@
     import mongoose from 'mongoose';
-    import { uuid } from 'uuidv4';
 
     const studentSchema = new mongoose.Schema({
 

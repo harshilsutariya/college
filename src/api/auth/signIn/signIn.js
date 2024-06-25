@@ -8,4 +8,4 @@ signInRouter.post('/signin/college', collegeSignInMethod);
 
 signInRouter.post('/signin/student' , studentSignInMethod)
 
-export default signInRouter
+export default signInRouter;

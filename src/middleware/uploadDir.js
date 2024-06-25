@@ -13,3 +13,4 @@ export const culturalUploadDir = path.join(__dirname, '../assets/cultural');
 export const alumniAndToppersUploadDir = path.join(__dirname, '../assets/alumniAndToppers');
 export const collegeImagesUploadDir = path.join(__dirname, '../assets/collgeImages');
 export const managementAndStaffUploadDir = path.join(__dirname, '../assets/managementAndStaff');
+export const studentApplicationUploadDir = path.join(__dirname, '../assets/studentApplication');

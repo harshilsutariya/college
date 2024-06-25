@@ -56,7 +56,7 @@ const academicsCreateMethod = async (req, res) => {
 
             let oneObj = {
                 collegeId,
-                localServerUrl: `${fileUrl}/academic/image/${req.files[i].originalname}`,
+                localServerUrl: `${fileUrl}/college/academic/image/${req.files[i].originalname}`,
                 moreInfo: moreInfoArray[i],
                 imageName: req.files[i].originalname,
                 // firebaseUrl: publicUrl
