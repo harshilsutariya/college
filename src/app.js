@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import collegeDetailRoutes from './router/collegeRouter.js';
 import authRouter from './router/authRouter.js';
 import studentRouter from './router/studentRouter.js';
+import forgetRoutes from './router/forgetrouter.js';
 
 const port = 3001;
 
@@ -15,6 +16,8 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 app.use(collegeDetailRoutes);
+
+app.use(forgetRoutes);
 
 app.use('/auth',authRouter);
 

@@ -51,7 +51,7 @@ const studentReviewDetailUpdateMethod = async (req, res) => {
 
         res.status(201).json({
             message: "Review added successfully",
-            studentReviwUpdateData
+            collegeReviwUpdateData
         });
     } catch (error) {
         res.status(500).json({ message: "Error", error });
