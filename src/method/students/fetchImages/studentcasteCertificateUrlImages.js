@@ -1,10 +1,10 @@
 import { dirname } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const tempPath = path.join(__dirname, '../../../assets/alumniAndToppers');
+const tempPath = path.join(__dirname, '../../../assets/studentApplication');
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-export const academicsImageMethod = async (req, res) => {
+export const casteCertificateUrlmageMethod = async (req, res) => {
     try {
         var imageName = req.params["imageName"];
         res.sendFile(tempPath + '/' + imageName);
@@ -14,4 +14,4 @@ export const academicsImageMethod = async (req, res) => {
     }
 }
 
-export default academicsImageMethod;
+export default casteCertificateUrlmageMethod;

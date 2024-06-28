@@ -36,7 +36,7 @@ const academicsSchema = new mongoose.Schema({
     },
 
     updatedAt: {
-        type: Number
+        type: Number,
     },
     
     isDeleted : {

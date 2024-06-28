@@ -6,8 +6,6 @@ import { emailRegex, phoneRegex } from '../../../utility/utils.js';
 const studentDetailUpdateMethod = async (req, res) => {
     try {
 
-        
-        
         const studentId = req.body.studentId
         const name = req.body.name;
         const gender = req.body.gender;

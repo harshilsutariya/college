@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const StudentCollegeApplicationSchema = new mongoose.Schema({
 
-    studentApplyId: {
+    studentId: {
         type: String,
     },
 
@@ -14,8 +14,17 @@ const StudentCollegeApplicationSchema = new mongoose.Schema({
         type: String,
     },
 
-    studentId: {
+    studentApplyId: {
         type: String,
+    },
+
+    Status: {
+        type: String,
+        enum: {
+            values: ['accept', 'pending','rejected'],
+            message: '{VALUE} is not supported'
+        },
+        default:'pending'
     },
 
     studentDetail:{

@@ -147,6 +147,20 @@ const collegeSchema = new mongoose.Schema({
         required: true,
     },
 
+    totalAdmission: {
+        type: Number,
+    },
+
+    appliedAdmission: {
+        type: Number,
+    },
+
+    review:{
+        type:Number,
+        default: 0
+    },
+
+
     createdAt: {
         type: Number,
         default: Date.now(),

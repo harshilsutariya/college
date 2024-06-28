@@ -4,8 +4,8 @@ import studentSignInMethod from "../../../method/auth/signIn/studentSignIn.js";
 
 const signInRouter = express.Router();
 
-signInRouter.post('/signin/college', collegeSignInMethod);
+signInRouter.post('/college', collegeSignInMethod);
 
-signInRouter.post('/signin/student' , studentSignInMethod)
+signInRouter.post('/student' , studentSignInMethod)
 
 export default signInRouter;

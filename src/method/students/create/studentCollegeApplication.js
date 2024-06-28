@@ -1,7 +1,9 @@
 import uuid4 from 'uuid4';
-import StudentCollegeApplication from '../../../model/student/StudentCollegeApplication.js';
+import StudentCollegeApplication from '../../../model/student/studentCollegeApplication.js';
 import { emailRegex, phoneRegex } from '../../../utility/utils.js';
 import { fileUrl } from '../../../utility/fileServerConfig.js';
+import collegeDetailModel from '../../../model/collegeDetail/collegeDetail.js';
+import subjectDetailModel from '../../../model/collegeDetail/subjects.js';
 
 const studentApplicationCreateMethod = async (req, res) => {
     try {
@@ -41,7 +43,6 @@ const studentApplicationCreateMethod = async (req, res) => {
         const phone = req.body.phone;
         const email = req.body.email;
         const note = req.body.note;
-        console.log(req.body);
 
         if (collegeId == null || subjectId == null || studentId == null || name == null || surname == null ||
             selectSubject == null || nationality == null || motherTongue == null || gender == null ||
@@ -52,6 +53,16 @@ const studentApplicationCreateMethod = async (req, res) => {
             annualIncome == null || addressResidence == null || parentCity == null || parentState == null ||
             addressPermanent == null || phone == null || email == null || note == null) {
             return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        const college = await collegeDetailModel.findOne({ collegeId, isDeleted: { $ne: true } });
+        if (!college) {
+            return res.status(404).send({ error: "College is not available. Enter correct collegeId." });
+        }
+
+        const subject = await subjectDetailModel.findOne({ subjectId, isDeleted: { $ne: true } });
+        if (!subject) {
+            return res.status(404).send({ error: "subject is not available. Enter correct collegeId." });
         }
 
         if (!emailRegex.test(email)) {
@@ -107,33 +118,44 @@ const studentApplicationCreateMethod = async (req, res) => {
             }
         }
 
-        const existingApplicationForSubject = await StudentCollegeApplication.findOne({ studentId,collegeId,subjectId });
-          
-        if (existingApplicationForSubject) {
-            return res.status(400).json({
-                error: 'You have already applied for this subject at this college.'
-            });
-        }
-        else {
-            const studentApplyId = uuid4();
-            const newstudentApply = new StudentCollegeApplication({
-                studentId, collegeId, subjectId, studentApplyId,
-                studentDetail, parentDetail, uploadDocument: upload_documents, note
-            });
-
-            if (!newstudentApply) {
-                return res.status(400).json({
-                    error: 'something went wrong'
-                });
+        // Check for previous applications
+        const previousApplications = await StudentCollegeApplication.find({ collegeId, subjectId, studentId });
+        if (previousApplications.length > 0 ) {
+            for (const application of previousApplications) {
+                if (application.Status === "pending" || application.Status === "accepted") {
+                    return res.status(403).json({
+                        message: `For this course, your previous application is already in ${application.Status} mode.`,
+                    });
+                }
             }
-            const studentapplicationData = await newstudentApply.save();
+        }
 
-            res.status(201).json({
-                message: "student Detail Add Successfully",
-                studentapplicationData
+        const studentApplyId = uuid4();
+        const newstudentApply = new StudentCollegeApplication({
+            studentId, collegeId, subjectId, studentApplyId,
+            studentDetail, parentDetail, uploadDocument: upload_documents, note
+        });
+
+        if (!newstudentApply) {
+            return res.status(400).json({
+                error: 'something went wrong'
             });
         }
+        const studentapplicationData = await newstudentApply.save();
+
+        if(studentapplicationData){
+            await collegeDetailModel.updateOne(
+                { collegeId: collegeId },
+                { $inc: { appliedAdmission: 1 } }
+            ); 
+        }
+
+        res.status(201).json({
+            message: "student Detail Add Successfully",
+            studentapplicationData
+        });
     }
+
     catch (error) {
         res.status(500).json({ message: "error", error });
         console.log(error);

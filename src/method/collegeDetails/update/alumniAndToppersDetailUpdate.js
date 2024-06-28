@@ -22,8 +22,6 @@ const alumniAndToppersUpdateMethod = async (req, res) => {
         let marksArray = req.body.marks;
         let photoIndexArray = req.body.photoIndex;
 
-        console.log(collegeIdArray);
-
         // Check if colleges exist
         const colleges = await collegeModel.find({ collegeId: { $in: collegeIdArray }, isDeleted: { $ne: true } });
 

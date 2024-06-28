@@ -16,7 +16,7 @@ app.use(express.static('public'));
 
 app.use(collegeDetailRoutes);
 
-app.use(authRouter);
+app.use('/auth',authRouter);
 
 app.use(studentRouter)
 

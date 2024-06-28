@@ -7,12 +7,12 @@ import bucket from '../../../utility/firebaseutility.js';
 const sportCreateMethod = async (req, res) => {
     try {
 
-         if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
-            return res.status(403).send({
-                status: "failed",
-                error: "You don't have access"
-            });
-        }
+        //  if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+        //     return res.status(403).send({
+        //         status: "failed",
+        //         error: "You don't have access"
+        //     });
+        // }
         
         const collegeId = req.body.collegeId;
         let moreInfoArray = req.body.moreInfo;
@@ -43,25 +43,25 @@ const sportCreateMethod = async (req, res) => {
 
         for (let i in fileArray) {
             const file = fileArray[i];
-            // const uniqueName = `${uuid4()}_${file.originalname}`;
-            // const folderPath = `academics/${uniqueName}`;
-            // const fileUpload = bucket.file(folderPath);
+            const uniqueName = `${uuid4()}_${file.originalname}`;
+            const folderPath = `sports/${uniqueName}`;
+            const fileUpload = bucket.file(folderPath);
 
-            // await fileUpload.save(file.buffer, {
-            //     contentType: file.mimetype,
-            //     public: true,
-            // });
+            await fileUpload.save(file.buffer, {
+                contentType: file.mimetype,
+                public: true,
+            });
 
-            // const publicUrl = `https://storage.googleapis.com/${bucket.name}/${uniqueName}`;
+            const publicUrl = `https://storage.googleapis.com/${bucket.name}/sports/${uniqueName}`;
 
-            // let imageName = `${uuid4()}_${req.files[i].originalname}`
+            let imageName = `${uuid4()}_${req.files[i].originalname}`
 
             let oneObj = {
                 collegeId,
                 localServerUrl: `${fileUrl}/college/sport/image/${req.files[i].originalname}`,
                 moreInfo: moreInfoArray[i],
                 imageName: req.files[i].originalname,
-                // firebaseUrl: publicUrl
+                firebaseUrl: publicUrl
             };  
             ObjToDocArray.push(oneObj);
         }

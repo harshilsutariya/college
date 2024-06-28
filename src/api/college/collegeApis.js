@@ -29,6 +29,7 @@ import academicsUpdateMultipleMethod from "../../method/collegeDetails/update/ac
 import collegeImagesUpdateMethod from "../../method/collegeDetails/update/collgeImagesDetailUpdate.js"
 import culturalUpdateMethod from "../../method/collegeDetails/update/culturalDetailUpdate.js"
 import managementAndStaffUpdateMethod from "../../method/collegeDetails/update/managementAndStaffDetailupdate.js"
+import StudentCollegeApplicationUpdateMethod from "../../method/students/update/chnageStudentStatus.js";
 
 import sportImageMethod from "../../method/collegeDetails/fetchImages/sportsImages.js";
 import culturalImageMethod from "../../method/collegeDetails/fetchImages/culturalImage.js";
@@ -53,8 +54,8 @@ import { alumniAndToppersUploadDir } from "../../middleware/uploadDir.js";
 import { collegeImagesUploadDir } from "../../middleware/uploadDir.js";
 import {managementAndStaffUploadDir} from "../../middleware/uploadDir.js"
 
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const culturalupload = uploadMW(culturalUploadDir);
 const sportupload = uploadMW(sportUploadDir);
@@ -74,7 +75,7 @@ collegeApisRouter.post('/infrastructure/create', verifyToken, infrastructureCrea
 
 collegeApisRouter.post('/highlights/create', verifyToken, highlightDetailCreateMethod);
 
-collegeApisRouter.post('/sport/create', verifyToken, sportupload.array("image"), sportDetailCreateMethod);
+collegeApisRouter.post('/sport/create',  verifyToken, upload.array("image"), sportDetailCreateMethod);
 
 collegeApisRouter.get('/sport/image/:imageName', verifyToken, sportImageMethod);
 
@@ -136,7 +137,7 @@ collegeApisRouter.patch('/collegePolicyAndSocialMediaDetail/update', verifyToken
 
 collegeApisRouter.patch('/youTubeLink/update', verifyToken, youTubeLinkDetailUpdateMethod);
 
-collegeApisRouter.patch('/sport/update', verifyToken, sportupload.array("image"), sportDetailUpdate);
+collegeApisRouter.patch('/sport/update', verifyToken,sportupload.array("image"), sportDetailUpdate);
 
 collegeApisRouter.patch('/subject/update', verifyToken, subjectDetailUpdateMethod);
 
@@ -156,5 +157,6 @@ collegeApisRouter.patch('/collegeImages/update', verifyToken, collegeImagesuploa
 
 collegeApisRouter.patch('/cultural/update', verifyToken, culturalupload.array("image"), culturalUpdateMethod);
 
+collegeApisRouter.patch('/status/update', verifyToken, StudentCollegeApplicationUpdateMethod);
 
 export default collegeApisRouter;
