@@ -66,7 +66,8 @@ const managementAndStaffUpload = uploadMW(managementAndStaffUploadDir);
 
 const collegeApisRouter = express.Router();
 
-collegeApisRouter.post('/team/create', createCollegeTeamMethod);
+
+
 
 // create data for college
 collegeApisRouter.post('/detail/create', verifyToken, collegeDetailCreateMethod);
@@ -107,6 +108,10 @@ collegeApisRouter.post('/collegePolicyAndSocialMedia/create', verifyToken, colle
 
 collegeApisRouter.post('/subjects/create', verifyToken, subjectsCreateMethod);
 
+collegeApisRouter.post('/team/create', verifyToken,createCollegeTeamMethod);
+
+
+
 
 //delete data from the college
 collegeApisRouter.patch('/delete/collegedetails/:collegeId', verifyToken, deleteCollegeDetailMethod);
@@ -123,10 +128,12 @@ collegeApisRouter.patch('/delete/managementAndStaff/:managementAndStaffId', veri
 
 
 
+
 //retrive data from the college
 collegeApisRouter.get('/detail/get/specific/:collegeId', verifyToken, collegeDataWithId);
 
 collegeApisRouter.get('/detail/get', verifyToken, collegeData);
+
 
 
 

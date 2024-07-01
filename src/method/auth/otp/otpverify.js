@@ -5,7 +5,10 @@ import bcrypt from 'bcrypt';
 
 export const otpverifyMethod = async (req, res) => {
     try {
-        const { email, otp, newPassword, confirmPassword } = req.body;
+        const email = req.body.email;
+        const otp = req.body.otp;
+        const newPassword = req.body.newPassword;
+        const confirmPassword = req.body.confirmPassword;
 
         if (!email || !otp || !newPassword || !confirmPassword) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -28,7 +31,7 @@ export const otpverifyMethod = async (req, res) => {
         if (!otpEntry) {
             return res.status(400).json({ error: 'Invalid OTP' });
         }
-
+        
         if (newPassword !== confirmPassword) {
             return res.status(400).json({ error: 'Passwords do not match' });
         }

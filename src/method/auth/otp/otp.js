@@ -6,16 +6,15 @@ import otpModel from '../../../model/admins/otp.js';
 export const otpMethod = async (req, res) => {
     try {
         const email = req.body.email;
-        // Check if user is an admin or student
+
         const admin = await collegeTeam.findOne({ email });
         const student = await students.findOne({ email });
 
         if (!admin && !student) {
             return res.status(400).json({ error: 'Invalid Credentials' });
         }
-
-        // Generate OTP
-        const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-character OTP
+        
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
         const emailexist = await otpModel.findOne({ email });
 
@@ -36,7 +35,6 @@ export const otpMethod = async (req, res) => {
             await otpEntry.save();
         }
 
-        // Send OTP via email
         const subject = 'Your OTP for Secure Access';
         const text = `Dear User,
 

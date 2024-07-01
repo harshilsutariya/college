@@ -5,6 +5,7 @@ import { otpverifyMethod } from "../../../method/auth/otp/otpverify.js";
 const otpRouter = express.Router();
 
 otpRouter.post('/otp', otpMethod);
-otpRouter.post('/verifyOtp', otpverifyMethod);
+
+otpRouter.post('/forgetpasssword', otpverifyMethod);
 
 export default otpRouter;
