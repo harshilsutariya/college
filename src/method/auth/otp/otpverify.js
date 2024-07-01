@@ -3,7 +3,7 @@ import students from '../../../model/student/studentRegistration.js';
 import otpModel from '../../../model/admins/otp.js';
 import bcrypt from 'bcrypt';
 
-export const otpverifyMethod = async (req, res) => {
+export const otpVerifyMethod = async (req, res) => {
     try {
         const email = req.body.email;
         const otp = req.body.otp;
@@ -21,17 +21,16 @@ export const otpverifyMethod = async (req, res) => {
             return res.status(400).json({ error: 'Invalid Credentials' });
         }
 
-        const otpEntry = await otpModel.findOne({ email, otp, status: 'active' });
-        const expire = await otpModel.findOne({ email, otp, status: 'expire' });
-
-        if (expire) {
-            return res.status(400).json({ error: 'OTP is expired' });
-        }
+        const otpEntry = await otpModel.findOne({ email, otp });
 
         if (!otpEntry) {
-            return res.status(400).json({ error: 'Invalid OTP' });
+            return res.status(400).json({ error: 'OTP Invalid ' });
         }
-        
+
+        if (otpEntry.status == "expire") {
+            return res.status(400).json({ error: 'OTP Invalid or Expired' });
+        }
+
         if (newPassword !== confirmPassword) {
             return res.status(400).json({ error: 'Passwords do not match' });
         }
@@ -58,4 +57,4 @@ export const otpverifyMethod = async (req, res) => {
     }
 };
 
-export default otpverifyMethod;
+export default otpVerifyMethod;

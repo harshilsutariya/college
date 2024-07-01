@@ -1,6 +1,4 @@
 import bcrypt from 'bcrypt';
-import uuid4 from 'uuid4';
-import adminModel from '../../../model/admins/collegeAdmins.js';
 import { emailRegex } from '../../../utility/utils.js';
 import collegeTeam from '../../../model/admins/collegeAdmins.js';
 
@@ -14,14 +12,14 @@ const createCollegeTeamMethod = async (req, res) => {
             });
         }
 
-        const Name = req.body.Name;
+        const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
         const role = req.body.role;
         const collegeId = req.body.collegeId;
 
         // Check if all required fields are present
-        if (!Name || !email || !password || !role) {
+        if (!name || !email || !password || !role) {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
@@ -31,7 +29,7 @@ const createCollegeTeamMethod = async (req, res) => {
         }
 
         // Check if email already exists in the database
-        const existingUser = await adminModel.findOne({ email });
+        const existingUser = await collegeTeam.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'Email already exists!' });
         }
@@ -42,7 +40,7 @@ const createCollegeTeamMethod = async (req, res) => {
         // Create a new college login entry
         const newCollegeUser = new collegeTeam({
             collegeId,
-            Name,
+            name,
             email,
             password: hashedPassword,
             role,

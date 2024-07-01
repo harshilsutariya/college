@@ -3,7 +3,7 @@ import students from '../../../model/student/studentRegistration.js';
 import { sendEmail } from '../../../Services/nodemailer.js';
 import otpModel from '../../../model/admins/otp.js';
 
-export const otpMethod = async (req, res) => {
+export const createOtpMethod = async (req, res) => {
     try {
         const email = req.body.email;
 
@@ -57,4 +57,4 @@ Your Support Team`;
     }
 };
 
-export default otpMethod;
+export default createOtpMethod;

@@ -2,7 +2,7 @@ import uuid4 from 'uuid4';
 import StudentCollegeApplication from "../../../model/student/studentCollegeApplication.js";
 import collegeDetailModel from '../../../model/collegeDetail/collegeDetail.js';
 
-const StudentCollegeApplicationUpdateMethod = async (req, res) => {
+const studentCollegeApplicationUpdateMethod = async (req, res) => {
     
     try {
         
@@ -46,7 +46,14 @@ const StudentCollegeApplicationUpdateMethod = async (req, res) => {
         if(Status=='accepted'){
             await collegeDetailModel.updateOne(
                 { collegeId: collegeId },
-                { $inc: { totalAdmission: 1 } }
+                { $inc: { totalAdmission: 1 ,appliedAdmission:-1} },
+            ); 
+        }
+
+        if(Status=='rejected'){
+            await collegeDetailModel.updateOne(
+                { collegeId: collegeId },
+                { $inc: { totalAdmission: -1, appliedAdmission:-1 } }
             ); 
         }
         res.status(200).json({
@@ -60,4 +67,4 @@ const StudentCollegeApplicationUpdateMethod = async (req, res) => {
     }
 }
 
-export default StudentCollegeApplicationUpdateMethod;
+export default studentCollegeApplicationUpdateMethod;

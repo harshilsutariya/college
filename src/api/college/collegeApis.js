@@ -29,7 +29,7 @@ import academicsUpdateMultipleMethod from "../../method/collegeDetails/update/ac
 import collegeImagesUpdateMethod from "../../method/collegeDetails/update/collgeImagesDetailUpdate.js"
 import culturalUpdateMethod from "../../method/collegeDetails/update/culturalDetailUpdate.js"
 import managementAndStaffUpdateMethod from "../../method/collegeDetails/update/managementAndStaffDetailupdate.js"
-import StudentCollegeApplicationUpdateMethod from "../../method/students/update/chnageStudentStatus.js";
+import studentCollegeApplicationUpdateMethod from "../../method/collegeDetails/update/studentApplicationStatus.js";
 
 import sportImageMethod from "../../method/collegeDetails/fetchImages/sportsImages.js";
 import culturalImageMethod from "../../method/collegeDetails/fetchImages/culturalImage.js";
@@ -39,7 +39,6 @@ import collegeImagesMethod from "../../method/collegeDetails/fetchImages/college
 import managementAndStaffImageMethod from "../../method/collegeDetails/fetchImages/managementAndStaffImage.js";
 import eligibilityUpdateMethod from "../../method/collegeDetails/update/eligibilityAndTermsDetailUpdate.js";
 import alumniAndToppersCreateMethod from "../../method/collegeDetails/update/alumniAndToppersDetailUpdate.js";
-import createCollegeTeamMethod from "../../method/collegeDetails/create/collegeTeam.js";
 import deleteCollegeDetailMethod from "../../method/collegeDetails/delete/collegeDetailDelete.js";
 import deletesportImageMethod from "../../method/collegeDetails/delete/imageDelete.js/sportdelete.js";
 import deleteacademicsImageMethod from "../../method/collegeDetails/delete/imageDelete.js/academicsDelete.js";
@@ -108,7 +107,7 @@ collegeApisRouter.post('/collegePolicyAndSocialMedia/create', verifyToken, colle
 
 collegeApisRouter.post('/subjects/create', verifyToken, subjectsCreateMethod);
 
-collegeApisRouter.post('/team/create', verifyToken,createCollegeTeamMethod);
+
 
 
 
@@ -164,6 +163,6 @@ collegeApisRouter.patch('/collegeImages/update', verifyToken, collegeImagesuploa
 
 collegeApisRouter.patch('/cultural/update', verifyToken, culturalupload.array("image"), culturalUpdateMethod);
 
-collegeApisRouter.patch('/status/update', verifyToken, StudentCollegeApplicationUpdateMethod);
+collegeApisRouter.patch('/status/update', verifyToken, studentCollegeApplicationUpdateMethod);
 
 export default collegeApisRouter;

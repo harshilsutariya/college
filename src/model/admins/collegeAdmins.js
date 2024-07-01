@@ -12,7 +12,7 @@ const collegeTeamSchema = new mongoose.Schema({
         default:uuid4
     },
 
-    Name:{
+    name:{
         type: String,
         required: true
     },
