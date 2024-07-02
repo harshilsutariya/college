@@ -3,68 +3,59 @@ import StudentCollegeApplication from "../../../model/student/studentCollegeAppl
 import collegeDetailModel from '../../../model/collegeDetail/collegeDetail.js';
 
 const studentCollegeApplicationUpdateMethod = async (req, res) => {
-    
     try {
-        
-        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
-            return res.status(403).send({
-                status: "failed",
-                error: "You don't have access"
-            });
-        }
-        
-        const collegeId = req.body.collegeId;
-        const studentId = req.body.studentId;
-        const subjectId = req.body.subjectId;
-        const Status = req.body.Status;
-        const note = req.body.note;
-        const studentApplyId = req.body.studentApplyId
+        // const { role } = req;
+        // if (!(role === 'superadmin' || role === 'collegeAdmin' || role === 'supermoderator')) {
+        //     return res.status(403).send({
+        //         status: "failed",
+        //         error: "You don't have access"
+        //     });
+        // }
 
-        const collegeExists = await StudentCollegeApplication.findOne({ collegeId: collegeId ,isDeleted: { $ne: true } });
+        const { collegeId, studentId, subjectId, Status, note, studentApplyId } = req.body;
+
+        const collegeExists = await StudentCollegeApplication.findOne({ collegeId, studentId, subjectId, studentApplyId, isDeleted: { $ne: true } });
         if (!collegeExists) {
-            return res.status(404).json({ error: 'College not found' });
-        }
-        const studentExists = await StudentCollegeApplication.findOne({ studentId: studentId ,isDeleted: { $ne: true } });
-        if (!studentExists) {
-            return res.status(404).json({ error: 'student not found' });
-        }
-        const subjectExists = await StudentCollegeApplication.findOne({ subjectId: subjectId ,isDeleted: { $ne: true } });
-        if (!subjectExists) {
-            return res.status(404).json({ error: 'subject not found' });
+            return res.status(404).json({ error: 'Application not found' });
         }
 
-        const updateData = {
-         Status,
-         note
-        };
+        if (collegeExists && collegeExists.createdAt == collegeExists.updatedAt) {
+            const updateData = {
+                Status,
+                note,
+                updatedAt: Date.now()
+            };
 
-        const StudentCollegeApplicationUpdateResult = await StudentCollegeApplication.updateOne(
-            { studentApplyId  },
-            { $set: updateData }
-        );
+            const StudentCollegeApplicationUpdateResult = await StudentCollegeApplication.updateOne(
+                { studentApplyId },
+                { $set: updateData }
+            );
 
-        if(Status=='accepted'){
-            await collegeDetailModel.updateOne(
-                { collegeId: collegeId },
-                { $inc: { totalAdmission: 1 ,appliedAdmission:-1} },
-            ); 
+            if (Status === 'accept') {
+                await collegeDetailModel.updateOne(
+                    { collegeId },
+                    { $inc: { totalAdmission: 1, appliedAdmission: -1 } }
+                );
+            }
+
+            if (Status === 'rejected') {
+                await collegeDetailModel.updateOne(
+                    { collegeId },
+                    { $inc: { totalAdmission: -1, appliedAdmission: -1 } }
+                );
+            }
+
+            return res.status(200).json({
+                message: "StudentCollegeApplication link details updated successfully",
+                StudentCollegeApplicationUpdateResult
+            });
+        }else{
+            res.status(500).json({ message: "you have already updated status" });
         }
-
-        if(Status=='rejected'){
-            await collegeDetailModel.updateOne(
-                { collegeId: collegeId },
-                { $inc: { totalAdmission: -1, appliedAdmission:-1 } }
-            ); 
-        }
-        res.status(200).json({
-            message: "StudentCollegeApplication link details updated successfully",
-            StudentCollegeApplicationUpdateResult
-        });
-
     } catch (error) {
         res.status(500).json({ message: "Error updating StudentCollegeApplication link details", error });
         console.log(error);
     }
-}
+};
 
 export default studentCollegeApplicationUpdateMethod;

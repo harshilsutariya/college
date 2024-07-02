@@ -160,7 +160,6 @@ const collegeSchema = new mongoose.Schema({
         default: 0
     },
 
-
     createdAt: {
         type: Number,
         default: Date.now(),

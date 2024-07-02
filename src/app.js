@@ -6,6 +6,7 @@ import studentRouter from './router/studentRouter.js';
 import forgetRoutes from './router/forgetrouter.js';
 import adminTeamRouter from './router/adminTeam.js';
 import collegeApplicationaRouter from './router/collegeApplication.js';
+import dashboardRoutes from './router/dashboardRouter.js';
 
 const port = 3001;
 
@@ -28,6 +29,8 @@ app.use(studentRouter)
 app.use(adminTeamRouter)
 
 app.use(collegeApplicationaRouter)
+
+app.use(dashboardRoutes)
 
 app.listen(port, () => {
     console.log(`Server running at ${port}`);

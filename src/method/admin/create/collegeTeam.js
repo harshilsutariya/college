@@ -5,21 +5,20 @@ import collegeTeam from '../../../model/admins/collegeAdmins.js';
 const createCollegeTeamMethod = async (req, res) => {
     try {
         
-        if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
-            return res.status(403).send({
-                status: "failed",
-                error: "You don't have access"
-            });
-        }
+        // if (!(req.role === 'superadmin' || req.role === 'collegeAdmin' || req.role === 'supermoderator')) {
+        //     return res.status(403).send({
+        //         status: "failed",
+        //         error: "You don't have access"
+        //     });
+        // }
 
-        const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
         const role = req.body.role;
         const collegeId = req.body.collegeId;
 
         // Check if all required fields are present
-        if (!name || !email || !password || !role) {
+        if (!email || !password || !role) {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
@@ -40,7 +39,6 @@ const createCollegeTeamMethod = async (req, res) => {
         // Create a new college login entry
         const newCollegeUser = new collegeTeam({
             collegeId,
-            name,
             email,
             password: hashedPassword,
             role,

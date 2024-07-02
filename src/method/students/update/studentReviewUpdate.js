@@ -27,7 +27,8 @@ const studentReviewDetailUpdateMethod = async (req, res) => {
             collegeId,
             reviewId,
             reviewStar: parseFloat(reviewStar),
-            text
+            text,
+            updatedAt:Date.now()
         };
 
         const studentReviwUpdateData = await studentreviewModel.updateOne(
@@ -43,16 +44,19 @@ const studentReviewDetailUpdateMethod = async (req, res) => {
             const newReviewCount = studentReviews.length;
             const newAverageReview = totalReviewStars / newReviewCount;
 
-            await collegeDetailModel.updateOne(
+           const studentReviw = await collegeDetailModel.updateOne(
                 { collegeId: collegeId },
                 { $set: { review: newAverageReview } }
             );
+            res.status(201).json({
+                message: "Review added successfully",
+                studentReviw
+            });
+        }else{
+            res.status(500).json({ message: "somethig went wrong" });
         }
 
-        res.status(201).json({
-            message: "Review added successfully",
-            collegeReviwUpdateData
-        });
+        
     } catch (error) {
         res.status(500).json({ message: "Error", error });
         console.error(error);
